@@ -45,7 +45,7 @@ def get_item_code():
 
     # Function for checking if the input is valid
 def check_valid_code(user_code):
-    for category, items in menu_inventory.items():
+    for category, items in Menu_Inventory.items():
         for item, details in items.items():
             if details["code"] == user_code:
                 return category, item, details
@@ -53,4 +53,4 @@ def check_valid_code(user_code):
    
     # Function for updating the stock after purchase
 def reduce_stock(category, item):
-    menu_inventory[category][item]["stock"] -= 1
+    Menu_Inventory[category][item]["stock"] -= 1

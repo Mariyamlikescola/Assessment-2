@@ -4,7 +4,7 @@ print("""
 
 █▀▄▀█ ▄▀█ █▀█ █ █▄█ ▄▀█ █▀▄▀█ ▀ █▀   █░█ █▀▀ █▄░█ █▀▄ █ █▄░█ █▀▀   █▀▄▀█ ▄▀█ █▀▀ █░█ █ █▄░█ █▀▀
 █░▀░█ █▀█ █▀▄ █ ░█░ █▀█ █░▀░█ ░ ▄█   ▀▄▀ ██▄ █░▀█ █▄▀ █ █░▀█ █▄█   █░▀░█ █▀█ █▄▄ █▀█ █ █░▀█ ██▄""")
-#Inventory made using nest dictionary
+#Creating an Inventory made using nest dictionary
 # Vending machine menu
 Menu_Inventory = {
     "Snacks": {
@@ -37,3 +37,20 @@ def display_menu(menu):
 
 # Calling the function to display the menu
 display_menu(Menu_Inventory)
+
+# Function for getting the user input
+def get_item_code():
+    user_code = input(" Please enter the code of the item you want to purchase: ").strip().upper()
+    return user_code
+
+    # Function for checking if the input is valid
+def check_valid_code(user_code):
+    for category, items in menu_inventory.items():
+        for item, details in items.items():
+            if details["code"] == user_code:
+                return category, item, details
+    return None, None, None
+   
+    # Function for updating the stock after purchase
+def reduce_stock(category, item):
+    menu_inventory[category][item]["stock"] -= 1

@@ -6,22 +6,30 @@ print("""
 # Creating an Inventory made using nested dictionary
 Menu_Inventory = {
     "Snacks": {
-        "Takis": {"code": "S01", "price": 1.5, "stock": 10},
+        "Takis": {"code": "S01", "price": 2.0, "stock": 10},
         "Cookie": {"code": "S02", "price": 2.0, "stock": 5},
-        "Snickers": {"code": "S03", "price": 3.0, "stock": 8},
+        "Oreo": {"code": "S03", "price": 3.0, "stock": 8},
         "KitKat": {"code": "S04", "price": 3.0, "stock": 7},
+        "Biscuit": {"code": "S05", "price": 3.0, "stock": 6},
+        "Cheetos": {"code": "S06", "price": 3.0, "stock": 10},
+
     },
     "Drinks": {
         "Water": {"code": "D01", "price": 1.0, "stock": 20},
         "Coca Cola": {"code": "D02", "price": 2.5, "stock": 15},
         "Mango juice": {"code": "D03", "price": 2.0, "stock": 12},
         "Seven up": {"code": "D04", "price": 2.5, "stock": 15},
+        "Cold coffee can": {"code": "D05", "price": 2.0, "stock": 6},
+        "Milk": {"code": "D06", "price": 2.0, "stock": 8}
     },
     "Healthy Options": {
         "Energy Bar": {"code": "H01", "price": 2.0, "stock": 7},
         "Pretzels": {"code": "H02", "price": 2.5, "stock": 5},
         "Fruit Cup": {"code": "H03", "price": 3.0, "stock": 6},
         "Banana": {"code": "H04", "price": 2.0, "stock": 6},
+        "Almonds": {"code": "H05", "price": 2.5, "stock": 8},
+        "Fruit Bowl": {"code": "H06", "price": 3.0, "stock": 8},
+
     },
 }
 
@@ -74,6 +82,34 @@ def pay(price):
 def ask_for_more():
     answer = input("Do you want to purchase another item? (yes/no): ").strip().lower()
     return answer == "yes"
+
+class VendingMachine:
+    def __init__(self):
+        # Dictionary of items and their suggested pairings
+        self.suggestions = {
+            "Takis": ["Seven up"],
+            "Cookie": ["Milk"],
+            "Oreo": ["Milk"],
+            "KitKat": ["Milk"],
+            "Water": ["Biscuit"],
+            "Coca Cola": ["Cheetos"],
+            "Mango Juice": ["Fruit cup","Fruit Bowl"],
+            "Seven up": ["Takis"],
+            "Energy Bar": ["Water"],
+            "Pretzels": ["Cold coffee can"],
+            "Fruit cup": ["Mango Juice"],
+            "Banana": ["Almonds"],
+            "Almonds": ["Banana", "Fruit Bowl"],
+            "Cold coffee can": ["Pretzels"],
+            "Cheetos": ["Coca Cola"],
+            "Biscuit": ["Milk"],
+            "Milk": ["Biscuit","Cookie","Oreo","KitKat"],
+            "Fruit Bowl": ["Almonds","Mango juice"],
+
+        }
+
+    def suggest(self, item):
+        return self.suggestions.get(item, [])
 
 # Main function to run the vending machine
 def run_vending_machine():

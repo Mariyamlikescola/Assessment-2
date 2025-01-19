@@ -57,3 +57,20 @@ def check_valid_code(user_code):
     # Function for updating the stock after purchase
 def reduce_stock(category, item):
     Menu_Inventory[category][item]["stock"] -= 1
+  
+    # Function for handling the payment
+def pay(price):
+    print(f"Price: AED{price:.2f}")
+    while True:
+        try:
+            money = float(input("Insert money: "))
+            if money < price:
+                print(f"You need AED{price - money:.2f} more.")
+            else:
+                change = money - price
+                if change > 0:
+                    print(f"Here is your change: AED{change:.2f}")
+                print("Payment successful!")
+                return True
+        except ValueError:
+            print("Invalid input. Enter a number.")

@@ -32,6 +32,11 @@ Menu_Inventory = {
 
     },
 }
+paring = { 
+    "S01" : "D02" , "S02" : "D06","S03" : "D06" ,"S04" : "D06" ,"S05" : "D05" ,"S06" : "D02" ,
+    "D01" : "H01" ,"D02" : "S06" ,"D03" : "H03" ,"D04" : "S01" ,"D05" : "H02" ,"D06" : "H02" ,"H01" : "D06" ,
+    "H02" : "D06" ,"H03" : "D03" ,"H04" : "H06" ,"H05" : "D06" ,"H06" : "H04" ,
+}
 
 # Function for displaying the menu
 def display_menu(menu):
@@ -41,11 +46,12 @@ def display_menu(menu):
         print(f"{category}:")
         for item in menu[category]:  # Loop through each item in the category
             details = menu[category][item]
-            print(f"  {details['code']} - {item} (${details['price']}, Stock: {details['stock']})")
+            print(f"  {details['code']} - {item} (AED{details['price']}, Stock: {details['stock']})")
         print()  # Blank line after each category
 
 # Function for getting the user input
 def get_item_code():
+    global user_code
     user_code = input(" Please enter the code of the item you want to purchase: ").strip().upper()
     return user_code
 
@@ -74,43 +80,20 @@ def pay(price):
                 if change > 0:
                     print(f"Here is your change: AED{change:.2f}")
                 print("Payment successful!")
-                return True
+                return True 
         except ValueError:
             print("Invalid input. Enter a number.")
 
-# Asking the user if they want another item
-def ask_for_more():
+def ask_for_more(user_code):
+    if user_code in paring:
+        paired_code = paring[user_code]
+        for category, items in Menu_Inventory.items():
+            for item, details in items.items():
+                if details["code"] == paired_code:
+                    print(f"Would you like to add {item} for AED{details['price']}? It will make an amazing combo!")
+                    break
     answer = input("Do you want to purchase another item? (yes/no): ").strip().lower()
     return answer == "yes"
-
-class VendingMachine:
-    def __init__(self):
-        # Dictionary of items and their suggested pairings
-        self.suggestions = {
-            "Takis": ["Seven up"],
-            "Cookie": ["Milk"],
-            "Oreo": ["Milk"],
-            "KitKat": ["Milk"],
-            "Water": ["Biscuit"],
-            "Coca Cola": ["Cheetos"],
-            "Mango Juice": ["Fruit cup","Fruit Bowl"],
-            "Seven up": ["Takis"],
-            "Energy Bar": ["Water"],
-            "Pretzels": ["Cold coffee can"],
-            "Fruit cup": ["Mango Juice"],
-            "Banana": ["Almonds"],
-            "Almonds": ["Banana", "Fruit Bowl"],
-            "Cold coffee can": ["Pretzels"],
-            "Cheetos": ["Coca Cola"],
-            "Biscuit": ["Milk"],
-            "Milk": ["Biscuit","Cookie","Oreo","KitKat"],
-            "Fruit Bowl": ["Almonds","Mango juice"],
-
-        }
-
-    def suggest(self, item):
-        return self.suggestions.get(item, [])
-
 # Main function to run the vending machine
 def run_vending_machine():
     while True:
@@ -126,7 +109,7 @@ def run_vending_machine():
         if pay(details["price"]):
             reduce_stock(category, item)
             print(f"Enjoy your {item}!")
-        if not ask_for_more():
+        if not ask_for_more(code):
             print("Thank you for using the vending machine. Goodbye!")
             break
 

@@ -91,7 +91,7 @@ def pay(price):
         except ValueError:
             print("Invalid input. Enter a number.")
 
-#Pairing the menu items with their complimentary items.
+#Pairing the menu items with their complementary items.
 paring = { 
     "S01" : "D02" , "S02" : "D06","S03" : "D06" ,"S04" : "D06" ,"S05" : "D05" ,"S06" : "D02" ,
     "D01" : "H01" ,"D02" : "S06" ,"D03" : "H03" ,"D04" : "S01" ,"D05" : "H02" ,"D06" : "H02" ,"H01" : "D06" ,
@@ -109,6 +109,7 @@ def ask_for_more(user_code):
                     break
     answer = input("Do you want to purchase another item? (yes/no): ").strip().lower()
     return answer == "yes"
+
 # Main function to bring all the functions together to run the vending machine
 def run_vending_machine():
     while True:
